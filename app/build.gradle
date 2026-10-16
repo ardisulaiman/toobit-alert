@@ -3,5 +3,7 @@ plugins { id 'com.android.application'; id 'org.jetbrains.kotlin.android' }
 android { namespace 'com.zyronstudio.toobitalert'; compileSdk 35
     compileOptions { sourceCompatibility JavaVersion.VERSION_17; targetCompatibility JavaVersion.VERSION_17 }
     kotlinOptions { jvmTarget = '17' }
+    signingConfigs { release { storeFile file(System.getenv('KEYSTORE_FILE') ?: 'release.keystore'); storePassword System.getenv('KEYSTORE_PASSWORD'); keyAlias System.getenv('KEY_ALIAS'); keyPassword System.getenv('KEY_PASSWORD') } }
     defaultConfig { applicationId 'com.zyronstudio.toobitalert'; minSdk 26; targetSdk 35; versionCode 1; versionName '1.0' }
+    buildTypes { release { signingConfig signingConfigs.release; minifyEnabled false } }
 }

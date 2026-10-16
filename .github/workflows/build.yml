@@ -8,9 +8,15 @@ jobs:
       - uses: actions/setup-java@v4
         with: { distribution: temurin, java-version: '17' }
       - uses: android-actions/setup-android@v3
-        with:
-          packages: 'platforms;android-35 build-tools;35.0.0'
+        with: { packages: 'platforms;android-35 build-tools;35.0.0' }
+      - name: Create signing key
+        run: keytool -genkeypair -v -keystore release.keystore -alias toobit-alert -keyalg RSA -keysize 2048 -validity 10000 -storepass changeit -keypass changeit -dname 'CN=Toobit Alert, O=Zyron Studio, C=ID'
       - uses: gradle/actions/setup-gradle@v4
-      - run: gradle assembleDebug
+      - run: gradle assembleRelease
+        env:
+          KEYSTORE_FILE: ${{ github.workspace }}/release.keystore
+          KEYSTORE_PASSWORD: changeit
+          KEY_ALIAS: toobit-alert
+          KEY_PASSWORD: changeit
       - uses: actions/upload-artifact@v4
-        with: { name: ToobitAlert-debug, path: app/build/outputs/apk/debug/app-debug.apk }
+        with: { name: ToobitAlert-release, path: app/build/outputs/apk/release/app-release.apk }
