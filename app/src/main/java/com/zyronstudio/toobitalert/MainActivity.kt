@@ -60,7 +60,7 @@ class MainActivity : Activity() {
     private fun buildScreen(): ScrollView {
         val scroll = ScrollView(this).apply { setBackgroundColor(bgColor) }
         val root = LinearLayout(this).apply { orientation = LinearLayout.VERTICAL }
-        scroll.addView(root, ScrollView.LayoutParams(-1, -2))
+        scroll.addView(root)
 
         val header = LinearLayout(this).apply {
             orientation = LinearLayout.VERTICAL
